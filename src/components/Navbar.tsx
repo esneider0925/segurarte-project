@@ -7,7 +7,8 @@ const Navbar = () => {
 
   const links = [
     { label: "Inicio", href: "#inicio" },
-    { label: "Servicios", href: "#servicios" },
+    { label: "Productos", href: "#productos" },
+    { label: "Galería", href: "#galeria" },
     { label: "Nosotros", href: "#nosotros" },
     { label: "Contacto", href: "#contacto" },
   ];
@@ -19,7 +20,6 @@ const Navbar = () => {
           <img src={logoSA} alt="SegurArte logo" className="h-10 md:h-12" />
         </a>
 
-        {/* Desktop */}
         <ul className="hidden md:flex items-center gap-8">
           {links.map((l) => (
             <li key={l.href}>
@@ -41,7 +41,6 @@ const Navbar = () => {
           </li>
         </ul>
 
-        {/* Mobile toggle */}
         <button
           onClick={() => setOpen(!open)}
           className="md:hidden text-navy-foreground"
@@ -51,7 +50,6 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile menu */}
       {open && (
         <div className="md:hidden bg-navy border-t border-navy-foreground/10 py-4">
           <ul className="container flex flex-col gap-4">

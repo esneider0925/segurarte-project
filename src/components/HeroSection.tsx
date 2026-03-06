@@ -18,18 +18,19 @@ const HeroSection = () => {
           <div className="inline-flex items-center gap-2 bg-primary/20 border border-primary/30 rounded-full px-4 py-1.5 mb-8">
             <Factory size={16} className="text-accent" />
             <span className="text-sm font-heading font-semibold text-accent">
-              Fabricantes Directos en Colombia
+              Más de 25 años protegiendo hogares en Colombia
             </span>
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-black leading-[1.05] text-primary-foreground mb-6">
-            Puertas de seguridad
-            <span className="block text-gradient-primary">con diseño</span>
+            Tranquilidad y
+            <span className="block text-gradient-primary">protección</span>
           </h1>
 
           <p className="text-lg md:text-xl text-navy-foreground/70 leading-relaxed mb-10 max-w-lg">
-            Fabricamos puertas de seguridad para viviendas y negocios con los
-            precios más competitivos del mercado. Instalación en toda Colombia.
+            Una puerta de seguridad no es un lujo, es protección para tu
+            patrimonio. Fabricantes directos con los precios más competitivos
+            del mercado. Instalación en toda Colombia.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">

@@ -1,0 +1,85 @@
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import logoSA from "@/assets/logoSA.png";
+
+const Navbar = () => {
+  const [open, setOpen] = useState(false);
+
+  const links = [
+    { label: "Inicio", href: "#inicio" },
+    { label: "Servicios", href: "#servicios" },
+    { label: "Nosotros", href: "#nosotros" },
+    { label: "Contacto", href: "#contacto" },
+  ];
+
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-navy/95 backdrop-blur-md border-b border-navy-foreground/10">
+      <div className="container flex items-center justify-between h-16 md:h-20">
+        <a href="#inicio">
+          <img src={logoSA} alt="SegurArte logo" className="h-10 md:h-12" />
+        </a>
+
+        {/* Desktop */}
+        <ul className="hidden md:flex items-center gap-8">
+          {links.map((l) => (
+            <li key={l.href}>
+              <a
+                href={l.href}
+                className="text-sm font-heading font-semibold tracking-wide text-navy-foreground/80 hover:text-primary-foreground transition-colors"
+              >
+                {l.label}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a
+              href="#contacto"
+              className="bg-gradient-primary text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-heading font-bold tracking-wide hover:opacity-90 transition-opacity"
+            >
+              Cotizar
+            </a>
+          </li>
+        </ul>
+
+        {/* Mobile toggle */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="md:hidden text-navy-foreground"
+          aria-label="Toggle menu"
+        >
+          {open ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile menu */}
+      {open && (
+        <div className="md:hidden bg-navy border-t border-navy-foreground/10 py-4">
+          <ul className="container flex flex-col gap-4">
+            {links.map((l) => (
+              <li key={l.href}>
+                <a
+                  href={l.href}
+                  onClick={() => setOpen(false)}
+                  className="block text-sm font-heading font-semibold text-navy-foreground/80 hover:text-primary-foreground transition-colors"
+                >
+                  {l.label}
+                </a>
+              </li>
+            ))}
+            <li>
+              <a
+                href="#contacto"
+                onClick={() => setOpen(false)}
+                className="inline-block bg-gradient-primary text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-heading font-bold"
+              >
+                Cotizar
+              </a>
+            </li>
+          </ul>
+        </div>
+      )}
+    </nav>
+  );
+};
+
+export default Navbar;

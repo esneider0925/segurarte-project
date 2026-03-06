@@ -1,11 +1,11 @@
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Factory } from "lucide-react";
 
 const highlights = [
-  "Más de 5 años de experiencia en el sector",
-  "Equipos de marcas líderes a nivel mundial",
-  "Instalación profesional y garantizada",
-  "Soporte técnico post-venta",
-  "Diseño personalizado para cada espacio",
+  "Fabricantes directos — sin intermediarios",
+  "Precios más competitivos del mercado",
+  "Diseños personalizados para cada proyecto",
+  "Instalación profesional en toda Colombia",
+  "Materiales de primera calidad garantizados",
 ];
 
 const AboutSection = () => {
@@ -18,14 +18,16 @@ const AboutSection = () => {
               Sobre Nosotros
             </span>
             <h2 className="text-3xl md:text-5xl font-heading font-black mt-3 mb-6 text-primary-foreground">
-              Seguridad con{" "}
-              <span className="text-gradient-primary">arte y diseño</span>
+              De la fábrica{" "}
+              <span className="text-gradient-primary">a tu puerta</span>
             </h2>
             <p className="text-navy-foreground/70 text-lg leading-relaxed mb-8">
               En <strong className="text-primary-foreground">SegurArte</strong>{" "}
-              creemos que la seguridad no tiene que ser invasiva ni antiestética.
-              Diseñamos e instalamos sistemas que protegen tu patrimonio sin
-              comprometer la estética de tu espacio.
+              somos una fábrica especializada en puertas de seguridad con
+              diseño. Al ser fabricantes directos, eliminamos intermediarios para
+              ofrecerte la mejor calidad al precio más justo. Además,
+              complementamos tu proyecto con persianas y chimeneas en mármol con
+              etanol.
             </p>
 
             <ul className="space-y-4">
@@ -41,13 +43,12 @@ const AboutSection = () => {
             </ul>
           </div>
 
-          {/* Stats */}
           <div className="grid grid-cols-2 gap-6">
             {[
-              { num: "500+", label: "Proyectos realizados" },
-              { num: "24/7", label: "Monitoreo disponible" },
-              { num: "100%", label: "Clientes satisfechos" },
-              { num: "5+", label: "Años de experiencia" },
+              { num: "500+", label: "Puertas instaladas" },
+              { num: "100%", label: "Fabricación propia" },
+              { num: "🇨🇴", label: "Cobertura nacional" },
+              { num: "#1", label: "Precio de fábrica" },
             ].map((s) => (
               <div
                 key={s.label}

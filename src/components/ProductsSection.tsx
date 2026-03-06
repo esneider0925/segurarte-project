@@ -79,7 +79,7 @@ const ProductsSection = () => {
 
         <div className="mt-12 bg-secondary/60 rounded-2xl p-8 md:p-10 text-center border border-border/60">
           <p className="text-lg font-heading font-bold text-foreground mb-1">
-            🇨🇴 Instalación en toda Colombia
+            Instalación en toda Colombia
           </p>
           <p className="text-muted-foreground">
             Llevamos e instalamos nuestros productos en cualquier ciudad del

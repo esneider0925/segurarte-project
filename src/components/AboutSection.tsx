@@ -1,4 +1,4 @@
-import { CheckCircle2, Factory } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 
 const highlights = [
   "Fabricantes directos — sin intermediarios",
@@ -23,11 +23,11 @@ const AboutSection = () => {
             </h2>
             <p className="text-navy-foreground/70 text-lg leading-relaxed mb-8">
               En <strong className="text-primary-foreground">SegurArte</strong>{" "}
-              somos una fábrica especializada en puertas de seguridad con
-              diseño. Al ser fabricantes directos, eliminamos intermediarios para
-              ofrecerte la mejor calidad al precio más justo. Además,
-              complementamos tu proyecto con persianas y chimeneas en mármol con
-              etanol.
+              llevamos más de <strong className="text-primary-foreground">25 años</strong> en
+              el mercado colombiano protegiendo los hogares de miles de familias.
+              Somos fabricantes directos de puertas de seguridad, lo que nos permite
+              ofrecer la mejor calidad al precio más justo. Una puerta de seguridad
+              no es un lujo, es tranquilidad y protección para tu patrimonio.
             </p>
 
             <ul className="space-y-4">
@@ -45,9 +45,9 @@ const AboutSection = () => {
 
           <div className="grid grid-cols-2 gap-6">
             {[
-              { num: "500+", label: "Puertas instaladas" },
+              { num: "25+", label: "Años de experiencia" },
+              { num: "Miles", label: "Familias protegidas" },
               { num: "100%", label: "Fabricación propia" },
-              { num: "🇨🇴", label: "Cobertura nacional" },
               { num: "#1", label: "Precio de fábrica" },
             ].map((s) => (
               <div

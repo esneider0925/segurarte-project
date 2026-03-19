@@ -9,8 +9,18 @@ import door5 from "@/assets/gallery/door-5.jpeg";
 import door6 from "@/assets/gallery/door-6.jpeg";
 import door7 from "@/assets/gallery/door-7.jpeg";
 import door8 from "@/assets/gallery/door-8.jpeg";
+import door9 from "@/assets/gallery/door-9.jpeg";
+import door10 from "@/assets/gallery/door-10.jpeg";
 import chimenea from "@/assets/gallery/chimenea.png";
+import chimenea2 from "@/assets/gallery/chimenea-2.jpeg";
+import chimenea3 from "@/assets/gallery/chimenea-3.jpeg";
+import chimenea4 from "@/assets/gallery/chimenea-4.jpeg";
+import chimeneaProceso1 from "@/assets/gallery/chimenea-proceso-1.jpeg";
+import chimeneaProceso2 from "@/assets/gallery/chimenea-proceso-2.jpeg";
 import persianas from "@/assets/gallery/persianas.jpg";
+import cortina1 from "@/assets/gallery/cortina-1.jpeg";
+import cortina2 from "@/assets/gallery/cortina-2.jpeg";
+import fabrica1 from "@/assets/gallery/fabrica-1.jpeg";
 
 const galleryItems = [
   { src: door1, label: "Puerta de seguridad — Acabado madera con vidrio", category: "Puertas" },
@@ -21,15 +31,25 @@ const galleryItems = [
   { src: door6, label: "Puerta de seguridad — Acabado natural", category: "Puertas" },
   { src: door7, label: "Puerta doble hoja — Diseño clásico", category: "Puertas" },
   { src: door8, label: "Puerta de seguridad — Franjas cromadas", category: "Puertas" },
+  { src: door9, label: "Puerta blindada — Acabado madera clara", category: "Puertas" },
+  { src: door10, label: "Puerta de seguridad — Acabado cerezo", category: "Puertas" },
   { src: persianas, label: "Panel japonés — Sala de estar", category: "Persianas" },
+  { src: cortina1, label: "Cortina velo — Habitación principal", category: "Persianas" },
+  { src: cortina2, label: "Cortina vertical — Sala con piso de madera", category: "Persianas" },
   { src: chimenea, label: "Chimenea en mármol — Instalación profesional", category: "Chimeneas" },
+  { src: chimenea2, label: "Chimenea de etanol — Diseño moderno", category: "Chimeneas" },
+  { src: chimenea3, label: "Chimenea empotrada — Acabado en piedra", category: "Chimeneas" },
+  { src: chimenea4, label: "Chimenea de pared — Mármol negro", category: "Chimeneas" },
+  { src: chimeneaProceso1, label: "Estructura de chimenea — En proceso", category: "Chimeneas" },
+  { src: chimeneaProceso2, label: "Instalación de chimenea — Obra en sitio", category: "Chimeneas" },
+  { src: fabrica1, label: "Fabricación directa — Soldadura de puertas", category: "Fábrica" },
 ];
 
 const GallerySection = () => {
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [filter, setFilter] = useState<string>("Todos");
 
-  const categories = ["Todos", "Puertas", "Persianas", "Chimeneas"];
+  const categories = ["Todos", "Puertas", "Persianas", "Chimeneas", "Fábrica"];
   const filtered = filter === "Todos" ? galleryItems : galleryItems.filter((g) => g.category === filter);
 
   const navigate = (dir: number) => {
@@ -54,7 +74,6 @@ const GallerySection = () => {
           </p>
         </div>
 
-        {/* Filters */}
         <div className="flex justify-center gap-3 mb-12 flex-wrap">
           {categories.map((c) => (
             <button
@@ -71,7 +90,6 @@ const GallerySection = () => {
           ))}
         </div>
 
-        {/* Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {filtered.map((item, i) => (
             <button
@@ -99,7 +117,6 @@ const GallerySection = () => {
         </div>
       </div>
 
-      {/* Lightbox */}
       {lightbox !== null && (
         <div
           className="fixed inset-0 z-50 bg-foreground/90 backdrop-blur-md flex items-center justify-center p-4"

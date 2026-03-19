@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, MessageCircle } from "lucide-react";
 import logoSA from "@/assets/logoSA.png";
+import { WHATSAPP_URL } from "./WhatsAppButton";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -33,9 +34,12 @@ const Navbar = () => {
           ))}
           <li>
             <a
-              href="#contacto"
-              className="bg-gradient-primary text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-heading font-bold tracking-wide hover:opacity-90 transition-opacity"
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-[#25D366] text-white px-5 py-2.5 rounded-lg text-sm font-heading font-bold tracking-wide hover:bg-[#20bd5a] transition-colors"
             >
+              <MessageCircle size={16} />
               Cotizar
             </a>
           </li>
@@ -66,10 +70,13 @@ const Navbar = () => {
             ))}
             <li>
               <a
-                href="#contacto"
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setOpen(false)}
-                className="inline-block bg-gradient-primary text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-heading font-bold"
+                className="inline-flex items-center gap-2 bg-[#25D366] text-white px-5 py-2.5 rounded-lg text-sm font-heading font-bold"
               >
+                <MessageCircle size={16} />
                 Cotizar
               </a>
             </li>

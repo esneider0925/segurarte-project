@@ -1,4 +1,5 @@
-import { Phone, Mail, MapPin, Instagram } from "lucide-react";
+import { Phone, Mail, MapPin, Instagram, MessageCircle } from "lucide-react";
+import { WHATSAPP_URL } from "./WhatsAppButton";
 
 const ContactSection = () => {
   return (
@@ -19,14 +20,13 @@ const ContactSection = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-10 max-w-5xl mx-auto">
-          {/* Contact info */}
           <div className="space-y-6">
             {[
               {
-                icon: Phone,
-                label: "Teléfono",
-                value: "Contáctanos por WhatsApp",
-                href: "https://wa.me/",
+                icon: MessageCircle,
+                label: "WhatsApp",
+                value: "Escríbenos ahora",
+                href: WHATSAPP_URL,
               },
               {
                 icon: Mail,
@@ -43,14 +43,14 @@ const ContactSection = () => {
               {
                 icon: MapPin,
                 label: "Ubicación",
-                value: "Servicio a toda la región",
+                value: "Servicio a toda Colombia",
                 href: "#",
               },
             ].map((c) => (
               <a
                 key={c.label}
                 href={c.href}
-                target={c.href.startsWith("http") ? "_blank" : undefined}
+                target={c.href.startsWith("http") || c.href.startsWith("https") ? "_blank" : undefined}
                 rel="noopener noreferrer"
                 className="flex items-center gap-5 bg-card rounded-2xl p-6 shadow-card border border-border/60 hover:shadow-elevated transition-shadow group"
               >
@@ -69,7 +69,6 @@ const ContactSection = () => {
             ))}
           </div>
 
-          {/* CTA card */}
           <div className="bg-gradient-hero rounded-2xl p-10 flex flex-col justify-center text-center">
             <h3 className="text-2xl md:text-3xl font-heading font-black text-primary-foreground mb-4">
               Solicita tu cotización gratuita
@@ -79,13 +78,13 @@ const ContactSection = () => {
               personalizada sin ningún compromiso.
             </p>
             <a
-              href="https://www.instagram.com/segurarte_"
+              href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-gradient-primary text-primary-foreground px-8 py-4 rounded-xl text-base font-heading font-bold hover:opacity-90 transition-opacity shadow-elevated mx-auto"
+              className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-8 py-4 rounded-xl text-base font-heading font-bold hover:bg-[#20bd5a] transition-colors shadow-elevated mx-auto"
             >
-              <Instagram size={20} />
-              Escríbenos por Instagram
+              <MessageCircle size={20} />
+              Cotizar por WhatsApp
             </a>
           </div>
         </div>

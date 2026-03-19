@@ -1,16 +1,12 @@
-import { Shield, ArrowRight, Factory } from "lucide-react";
+import { ArrowRight, Factory } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
+import { WHATSAPP_URL } from "./WhatsAppButton";
 
 const HeroSection = () => {
   return (
-    <section
-      id="inicio"
-      className="relative min-h-screen flex items-center overflow-hidden"
-    >
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${heroBg})` }}
-      />
+    <section id="inicio" className="relative min-h-screen flex items-center overflow-hidden">
+      <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${heroBg})` }} />
       <div className="absolute inset-0 bg-gradient-hero opacity-75" />
 
       <div className="container relative z-10 py-32 md:py-40">
@@ -35,17 +31,20 @@ const HeroSection = () => {
 
           <div className="flex flex-col sm:flex-row gap-4">
             <a
-              href="#contacto"
-              className="inline-flex items-center justify-center gap-2 bg-gradient-primary text-primary-foreground px-8 py-4 rounded-xl text-base font-heading font-bold hover:opacity-90 transition-opacity shadow-elevated"
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-8 py-4 rounded-xl text-base font-heading font-bold hover:bg-[#20bd5a] transition-colors shadow-elevated"
             >
-              Solicitar Cotización
-              <ArrowRight size={18} />
+              <MessageCircle size={20} />
+              Cotizar por WhatsApp
             </a>
             <a
               href="#productos"
               className="inline-flex items-center justify-center gap-2 border border-navy-foreground/20 text-navy-foreground px-8 py-4 rounded-xl text-base font-heading font-semibold hover:bg-navy-foreground/5 transition-colors"
             >
               Ver Productos
+              <ArrowRight size={18} />
             </a>
           </div>
         </div>

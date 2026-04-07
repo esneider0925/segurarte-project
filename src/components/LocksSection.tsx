@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
+import BrandsMarquee from "./BrandsMarquee";
 
 import lock1 from "@/assets/locks/lock-1.png";
 import lock2 from "@/assets/locks/lock-2.png";
@@ -13,6 +14,10 @@ import lock7 from "@/assets/locks/lock-7.png";
 import iseoLogo from "@/assets/brands/iseo.png";
 import securemmeLogo from "@/assets/brands/securemme.png";
 import fourKLogo from "@/assets/brands/4k.png";
+import cisaLogo from "@/assets/brands/cisa.png";
+import klLogo from "@/assets/brands/kl.png";
+import kaleLogo from "@/assets/brands/kale.png";
+import multlockLogo from "@/assets/brands/multlock.png";
 
 const lockItems = [
   { src: lock1, label: "Cerradura multipunto — Acabado cromado" },
@@ -28,6 +33,10 @@ const brands = [
   { src: iseoLogo, name: "ISEO" },
   { src: securemmeLogo, name: "Securemme" },
   { src: fourKLogo, name: "4K Italy" },
+  { src: cisaLogo, name: "CISA" },
+  { src: klLogo, name: "KL Cerraduras" },
+  { src: kaleLogo, name: "Kale Kilit" },
+  { src: multlockLogo, name: "Mul-T-Lock" },
 ];
 
 const LocksSection = () => {
@@ -54,14 +63,11 @@ const LocksSection = () => {
     onSelect();
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
-    return () => {
-      emblaApi.off("select", onSelect);
-    };
+    return () => { emblaApi.off("select", onSelect); };
   }, [emblaApi, onSelect]);
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
-
   const totalDots = emblaApi?.scrollSnapList().length ?? 0;
 
   return (
@@ -101,23 +107,13 @@ const LocksSection = () => {
           <div className="overflow-hidden rounded-2xl" ref={emblaRef}>
             <div className="flex -ml-4">
               {lockItems.map((item, i) => (
-                <div
-                  key={i}
-                  className="min-w-0 shrink-0 grow-0 basis-full sm:basis-1/2 md:basis-1/3 pl-4"
-                >
+                <div key={i} className="min-w-0 shrink-0 grow-0 basis-full sm:basis-1/2 md:basis-1/3 pl-4">
                   <div className="bg-background rounded-2xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-300 border border-border/60">
                     <div className="aspect-square p-4 flex items-center justify-center bg-muted/30">
-                      <img
-                        src={item.src}
-                        alt={item.label}
-                        className="max-w-full max-h-full object-contain"
-                        loading="lazy"
-                      />
+                      <img src={item.src} alt={item.label} className="max-w-full max-h-full object-contain" loading="lazy" />
                     </div>
                     <div className="p-4">
-                      <p className="text-sm font-heading font-semibold text-foreground line-clamp-2">
-                        {item.label}
-                      </p>
+                      <p className="text-sm font-heading font-semibold text-foreground line-clamp-2">{item.label}</p>
                     </div>
                   </div>
                 </div>
@@ -126,7 +122,6 @@ const LocksSection = () => {
           </div>
         </div>
 
-        {/* Dot indicators */}
         {totalDots > 1 && (
           <div className="flex justify-center gap-2 mt-8">
             {Array.from({ length: totalDots }).map((_, i) => (
@@ -134,38 +129,22 @@ const LocksSection = () => {
                 key={i}
                 onClick={() => emblaApi?.scrollTo(i)}
                 className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                  i === selectedIndex
-                    ? "bg-primary w-8"
-                    : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                  i === selectedIndex ? "bg-primary w-8" : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
                 }`}
               />
             ))}
           </div>
         )}
 
-        {/* Brands section */}
+        {/* Brands marquee */}
         <div className="mt-20 text-center">
           <h3 className="text-xl md:text-2xl font-heading font-bold text-foreground mb-2">
-            Trabajamos con marcas líderes en seguridad
+            Marcas líderes en seguridad para tu hogar
           </h3>
           <p className="text-muted-foreground mb-10">
-            Las mejores cerraduras del mercado internacional para proteger tu hogar.
+            Las mejores cerraduras del mercado internacional.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-10 md:gap-16">
-            {brands.map((brand) => (
-              <div
-                key={brand.name}
-                className="bg-background rounded-xl p-6 shadow-card border border-border/60 flex items-center justify-center hover:shadow-elevated transition-shadow duration-300"
-                style={{ minWidth: 140, minHeight: 100 }}
-              >
-                <img
-                  src={brand.src}
-                  alt={brand.name}
-                  className="max-h-16 md:max-h-20 w-auto object-contain"
-                />
-              </div>
-            ))}
-          </div>
+          <BrandsMarquee brands={brands} />
         </div>
       </div>
     </section>

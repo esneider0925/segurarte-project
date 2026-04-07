@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import useEmblaCarousel from "embla-carousel-react";
 
 import door1 from "@/assets/gallery/door-1.jpeg";
 import door2 from "@/assets/gallery/door-2.jpeg";
@@ -52,11 +53,51 @@ const GallerySection = () => {
   const categories = ["Todos", "Puertas", "Persianas", "Chimeneas", "Fábrica"];
   const filtered = filter === "Todos" ? galleryItems : galleryItems.filter((g) => g.category === filter);
 
-  const navigate = (dir: number) => {
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "start",
+    slidesToScroll: 1,
+    containScroll: "trimSnaps",
+    loop: true,
+  });
+
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setCanScrollPrev(emblaApi.canScrollPrev());
+    setCanScrollNext(emblaApi.canScrollNext());
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on("select", onSelect);
+    emblaApi.on("reInit", onSelect);
+    return () => {
+      emblaApi.off("select", onSelect);
+    };
+  }, [emblaApi, onSelect]);
+
+  // Re-init carousel when filter changes
+  useEffect(() => {
+    if (emblaApi) {
+      emblaApi.reInit();
+    }
+  }, [filter, emblaApi]);
+
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+
+  const navigateLightbox = (dir: number) => {
     if (lightbox === null) return;
-    const newIdx = lightbox + dir;
-    if (newIdx >= 0 && newIdx < filtered.length) setLightbox(newIdx);
+    const newIdx = (lightbox + dir + filtered.length) % filtered.length;
+    setLightbox(newIdx);
   };
+
+  const totalDots = emblaApi?.scrollSnapList().length ?? 0;
 
   return (
     <section id="galeria" className="py-24 md:py-32 bg-background">
@@ -74,7 +115,8 @@ const GallerySection = () => {
           </p>
         </div>
 
-        <div className="flex justify-center gap-3 mb-12 flex-wrap">
+        {/* Category filters */}
+        <div className="flex justify-center gap-3 mb-10 flex-wrap">
           {categories.map((c) => (
             <button
               key={c}
@@ -90,33 +132,76 @@ const GallerySection = () => {
           ))}
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filtered.map((item, i) => (
-            <button
-              key={item.src}
-              onClick={() => setLightbox(i)}
-              className="group relative aspect-[3/4] rounded-2xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-300"
-            >
-              <img
-                src={item.src}
-                alt={item.label}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                <span className="text-xs font-heading font-bold text-primary-foreground bg-primary/80 backdrop-blur-sm px-2 py-1 rounded">
-                  {item.category}
-                </span>
-                <p className="text-sm font-heading font-semibold text-primary-foreground mt-1.5 line-clamp-2">
-                  {item.label}
-                </p>
-              </div>
-            </button>
-          ))}
+        {/* Carousel */}
+        <div className="relative group">
+          {/* Navigation buttons */}
+          <button
+            onClick={scrollPrev}
+            disabled={!canScrollPrev}
+            className="absolute -left-4 md:-left-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-background/90 backdrop-blur-sm shadow-elevated border border-border flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground transition-all disabled:opacity-30 disabled:pointer-events-none"
+          >
+            <ChevronLeft size={22} />
+          </button>
+          <button
+            onClick={scrollNext}
+            disabled={!canScrollNext}
+            className="absolute -right-4 md:-right-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-background/90 backdrop-blur-sm shadow-elevated border border-border flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground transition-all disabled:opacity-30 disabled:pointer-events-none"
+          >
+            <ChevronRight size={22} />
+          </button>
+
+          <div className="overflow-hidden rounded-2xl" ref={emblaRef}>
+            <div className="flex -ml-4">
+              {filtered.map((item, i) => (
+                <div
+                  key={`${filter}-${i}`}
+                  className="min-w-0 shrink-0 grow-0 basis-1/2 md:basis-1/3 lg:basis-1/4 pl-4"
+                >
+                  <button
+                    onClick={() => setLightbox(i)}
+                    className="group/card relative aspect-[3/4] w-full rounded-2xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-300"
+                  >
+                    <img
+                      src={item.src}
+                      alt={item.label}
+                      className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-4 group-hover/card:translate-y-0 opacity-0 group-hover/card:opacity-100 transition-all duration-300">
+                      <span className="text-xs font-heading font-bold text-primary-foreground bg-primary/80 backdrop-blur-sm px-2 py-1 rounded">
+                        {item.category}
+                      </span>
+                      <p className="text-sm font-heading font-semibold text-primary-foreground mt-1.5 line-clamp-2">
+                        {item.label}
+                      </p>
+                    </div>
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
+
+        {/* Dot indicators */}
+        {totalDots > 1 && (
+          <div className="flex justify-center gap-2 mt-8">
+            {Array.from({ length: totalDots }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => emblaApi?.scrollTo(i)}
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                  i === selectedIndex
+                    ? "bg-primary w-8"
+                    : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
+      {/* Lightbox */}
       {lightbox !== null && (
         <div
           className="fixed inset-0 z-50 bg-foreground/90 backdrop-blur-md flex items-center justify-center p-4"
@@ -129,23 +214,19 @@ const GallerySection = () => {
             <X size={28} />
           </button>
 
-          {lightbox > 0 && (
-            <button
-              onClick={(e) => { e.stopPropagation(); navigate(-1); }}
-              className="absolute left-4 md:left-8 text-primary-foreground/70 hover:text-primary-foreground transition-colors"
-            >
-              <ChevronLeft size={40} />
-            </button>
-          )}
+          <button
+            onClick={(e) => { e.stopPropagation(); navigateLightbox(-1); }}
+            className="absolute left-4 md:left-8 text-primary-foreground/70 hover:text-primary-foreground transition-colors"
+          >
+            <ChevronLeft size={40} />
+          </button>
 
-          {lightbox < filtered.length - 1 && (
-            <button
-              onClick={(e) => { e.stopPropagation(); navigate(1); }}
-              className="absolute right-4 md:right-8 text-primary-foreground/70 hover:text-primary-foreground transition-colors"
-            >
-              <ChevronRight size={40} />
-            </button>
-          )}
+          <button
+            onClick={(e) => { e.stopPropagation(); navigateLightbox(1); }}
+            className="absolute right-4 md:right-8 text-primary-foreground/70 hover:text-primary-foreground transition-colors"
+          >
+            <ChevronRight size={40} />
+          </button>
 
           <div className="max-w-4xl max-h-[85vh] flex flex-col items-center" onClick={(e) => e.stopPropagation()}>
             <img
@@ -156,6 +237,9 @@ const GallerySection = () => {
             <p className="text-primary-foreground font-heading font-semibold mt-4 text-center">
               {filtered[lightbox].label}
             </p>
+            <span className="text-primary-foreground/60 text-sm mt-1">
+              {lightbox + 1} / {filtered.length}
+            </span>
           </div>
         </div>
       )}
